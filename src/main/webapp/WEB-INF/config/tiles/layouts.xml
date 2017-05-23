@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="layout-01" template="/WEB-INF/views/tiles/layout-01.jsp">
+		<put-attribute name="resources" value="/WEB-INF/views/tiles/resources-01.jsp" />
+		<put-attribute name="content"    value="" />
+		<put-attribute name="footer"     value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	<definition name="layout-02" template="/WEB-INF/views/tiles/layout-02.jsp">
+		<put-attribute name="resources" value="/WEB-INF/views/tiles/resources-02.jsp" />
+		<put-attribute name="header"     value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="content"    value="" />
+		<put-attribute name="footer"     value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+
+	<definition name="*.tiles" extends="layout-02">
+		<put-attribute name="content"   value="/WEB-INF/views/{1}.jsp" />
+	</definition>
+
+	<definition name="auth/*" extends="layout-01">
+		<put-attribute name="content"   value="/WEB-INF/views/auth/{1}.jsp" />
+	</definition>
+	
+	<definition name="*/*" extends="layout-02">
+		<put-attribute name="content"   value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+
+</tiles-definitions>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ccmedia.mbtable.mapper.CrudMapper">
+
+	<insert id="c">
+		insert into user_agent values(
+			#{PHONE_CD}
+			,#{PHONE_NM}
+			<if test="MANU_YMD == ''">,null</if>
+			<if test="MANU_YMD != ''">,#{MANU_YMD}</if>
+			,#{MANU_CD}
+			,#{CARRIER_CD}
+			,#{CARRIER_NATION}
+			,#{SCR_WIDTH}
+			,#{SCR_HEIGHT}
+			,#{SCR_CD}
+			,#{OS_TYPE}
+			,#{OS_VER}
+			,#{OS_NM}
+			,#{CPU_CORE}
+			,#{CPU_HZ}
+			,#{RAM_SIZE}
+			,#{KOR_URL}
+			,#{ENG_URL}
+		);
+	</insert>
+	
+	<select id="r" resultType="map">
+		select * from user_agent
+		order by 1
+	</select>
+	
+	<update id="u">
+		update user_agent
+			set phone_cd = #{PHONE_CD}
+			,phone_nm = #{PHONE_NM}
+			<if test="MANU_YMD == ''">,manu_ymd = null</if>
+			<if test="MANU_YMD != ''">,manu_ymd = #{MANU_YMD}</if>
+			,manu_cd = #{MANU_CD}
+			,carrier_cd = #{CARRIER_CD}
+			,carrier_nation = #{CARRIER_NATION}
+			,scr_width = #{SCR_WIDTH}
+			,scr_height = #{SCR_HEIGHT}
+			,scr_cd = #{SCR_CD}
+			,os_type = #{OS_TYPE}
+			,os_ver = #{OS_VER}
+			,os_nm = #{OS_NM}
+			,cpu_core = #{CPU_CORE}
+			,cpu_hz = #{CPU_HZ}
+			,ram_size = #{RAM_SIZE}
+			,kor_url = #{KOR_URL}
+			,eng_url = #{ENG_URL}
+		where phone_cd = #{PHONE_CD}
+	</update>
+	
+	<delete id="d">
+		delete from user_agent
+		where phone_cd = #{PHONE_CD}
+	</delete>
+
+</mapper>
+

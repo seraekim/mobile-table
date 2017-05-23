@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration>
+	<appender name="CLICKABLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>
+				[%-5p] %d{yyyy-MM-dd HH:mm:ss.sss} %c.%M\(%F:%L\) %m%n%xEx
+			</Pattern>
+		</encoder>
+	</appender>
+	<appender name="SIMPLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>
+				[%-5p] %d{yyyy-MM-dd HH:mm:ss.sss} %m%n%xEx
+			</Pattern>
+		</encoder>
+	</appender>
+	<logger name="com.ccmedia.mbtable.mapper" level="debug" additivity="false">
+		<appender-ref ref="SIMPLE" />
+	</logger>
+	<logger name="com.ccmedia.mbtable" level="debug" additivity="false">
+		<appender-ref ref="CLICKABLE" />
+	</logger>
+
+	<root level="warn">
+		<appender-ref ref="SIMPLE" />
+	</root>
+</Configuration>
