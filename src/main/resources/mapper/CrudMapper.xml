@@ -4,6 +4,7 @@
 <mapper namespace="com.ccmedia.mbtable.mapper.CrudMapper">
 
 	<insert id="c">
+	-- create
 		insert into user_agent values(
 			#{PHONE_CD}
 			,#{PHONE_NM}
@@ -27,11 +28,19 @@
 	</insert>
 	
 	<select id="r" resultType="map">
+	-- read
 		select * from user_agent
 		order by 1
 	</select>
 	
+	<select id="cnt" resultType="int">
+	-- cnt
+		select count(*) from user_agent
+		<if test="PHONE_CD != ''">where phone_cd = #{PHONE_CD}</if>
+	</select>
+	
 	<update id="u">
+	-- update
 		update user_agent
 			set phone_cd = #{PHONE_CD}
 			,phone_nm = #{PHONE_NM}
@@ -55,6 +64,7 @@
 	</update>
 	
 	<delete id="d">
+	-- delete
 		delete from user_agent
 		where phone_cd = #{PHONE_CD}
 	</delete>

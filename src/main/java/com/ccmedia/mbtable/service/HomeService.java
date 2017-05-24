@@ -17,7 +17,11 @@ public class HomeService {
 	private CrudMapper crudMapper;
 
 	public int create(Map mapReq) throws Exception {
-		return crudMapper.c(mapReq);
+		if(crudMapper.cnt(mapReq) == 0) {
+			return crudMapper.c(mapReq);
+		} else {
+			return 0;
+		}
 	}
 	
 	public List<Map> read() throws Exception {
@@ -25,10 +29,22 @@ public class HomeService {
 	}
 
 	public int update(Map mapReq) throws Exception {
-		return crudMapper.u(mapReq);
+		if(crudMapper.cnt(mapReq) == 1) {
+			return crudMapper.u(mapReq);
+		} else {
+			return 0;
+		}
 	}
 
 	public int delete(Map mapReq) throws Exception {
-		return crudMapper.d(mapReq);
+		if(crudMapper.cnt(mapReq) == 1) {
+			return crudMapper.d(mapReq);
+		} else {
+			return 0;
+		}
 	}
+	
+//	public int cnt(Map mapReq) throws Exception {
+//		return crudMapper.cnt(mapReq);
+//	}
 }

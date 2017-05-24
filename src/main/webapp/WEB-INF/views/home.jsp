@@ -19,6 +19,20 @@
 		td {
 			word-wrap:break-word;
 		}
+		.jsgrid-header-row .header-cell-placeholder {
+    		background: #E3F1FF;
+		}
+		.jsgrid-grid-header.jsgrid-header-scrollbar {
+			position: fixed;
+			overflow-y: hidden;
+			overflow-x: auto;
+		}
+
+		.jsgrid-grid-body {
+	    	margin-top: 109px;
+			overflow-y: hidden;
+			overflow-x: auto;
+		}
 	</style>
 	<script src="resources/lib/jquery/jquery-1.8.3.js"></script>
 </head>
@@ -37,6 +51,8 @@
 	<script src="resources/lib/jsgrid-1.5.3/src/fields/jsgrid.field.checkbox.js"></script>
 	<script src="resources/lib/jsgrid-1.5.3/src/fields/jsgrid.field.control.js"></script>
 	<script src="resources/lib/jsgrid-1.5.3/src/i18n/ko.js"></script>
+<!-- 	<script src="resources/lib/jquery/jquery-ui.js"></script> -->
+<!-- 	<script src="resources/lib/colResizable-1.6/colResizable-1.6.js"></script> -->
 	<script>
 		var ctxp = '${ctxp}';
 		jsGrid.locale("ko");
@@ -205,6 +221,53 @@
                     	grid.jsGrid("sort", { field: "PHONE_CD", order: "asc" });
                 	}
                 },
+                resizable: true,
+                // width 가 1000px까지는 정상적으로 보이는데 그것보다크면.. 이상해짐..
+                /* onRefreshed: function(e) {
+                    var $headerRow = $("#srkGrid .jsgrid-header-row");
+                    var $headerCells = $headerRow.find("th");
+                    var fields = e.grid.option("fields");
+            
+                    $.each(fields, function(index, field) {
+                        $headerCells.eq(index).data("JSField", field);
+                    });
+            		console.log($headerRow);
+                    $headerRow.sortable({
+                        axis: "x",
+                        //forcePlaceholderSize: true,
+                        placeholder: "header-cell-placeholder",
+                        start: function(e, ui){
+                        	console.log(e, ui);
+//                         	ui.placeholder.html('<div>placeholder</div>');
+//                         	ui.helper.html('<div>helper</div>');
+                            ui.placeholder.width(ui.helper.context.style.width);
+                        },
+                        update: function(e, ui) {
+                            var fields = $.map($headerRow.find("th"), function(cell) {
+                                return $(cell).data("JSField");
+                            });
+            
+                            grid.jsGrid("option", "fields", fields);
+                        }
+                    });
+                }, */
+                
+                // 편집기능이 들어가게 되는 경우... 각 행마다 컬럼 넓이가 맞지 않게 된다.
+                /* onRefreshed: function (args) {
+                    //sync column width on page load
+                    $.each(args.grid._headerGrid[0].rows[0].cells, function (i, obj) {
+                        $(args.grid._bodyGrid[0].rows[0].cells[i]).css("width", $(obj).css("width"));
+                    });
+
+                    //sync column width on column resize
+                    $("table").colResizable({
+                        onResize: function () {
+                            $.each(args.grid._headerGrid[0].rows[0].cells, function (i, obj) {
+                                $(args.grid._bodyGrid[0].rows[0].cells[i]).css("width", $(obj).css("width"));
+                            });
+                        }
+                    });
+                }, */
                 fields: [
                     { type: "control" },
                     { name: "PHONE_CD", title: "제품코드", type: "text", width: 80, validate: "phone_cd" },

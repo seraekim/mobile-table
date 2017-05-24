@@ -9,4 +9,5 @@ public interface CrudMapper {
 	List<Map> r();
 	int u(Map mapReq);
 	int d(Map mapReq);
+	int cnt(Map mapReq);
 }
