@@ -72,11 +72,29 @@
 				return true;
 			}
 		}
+
+	    // 여러 사라밍 동시에 생성,삭제,갱신,조회를 할 때 브라우저상에서는 동기화가 안되므로 예상되는 에러를 처리
+		function dealRes (data, item, msg, reload) {
+			console.log(data);
+			var result = 0;
+			if(data == 1) {
+				result = item;
+			} else if(data == 0) {
+				alert(msg);
+				if(reload) location.reload();
+			} else if(data == -1) {
+				alert('db에 문제가 있습니다.')
+			} else {
+				alert('알 수 없는 에러 발생.');
+			}
+			return result;
+		};
+		
 		$.ajax({
 			type : "GET",
 			url : ctxp + "/read"
 		}).done(function(res) {
-			console.log(res);
+			//console.log(res);
 			var grid = $("#srkGrid").jsGrid({
                 width: "100%",
                 filtering: true,
@@ -110,32 +128,31 @@
 			                    && (!filter.ENG_URL || lowerIndexOf(res.ENG_URL, filter.ENG_URL))
 			            });
 				    },
-				    
 				    insertItem: function(item) {
+				    	var result = 0;
 						$.ajax({
 							type: 'POST',
 							url: '/create',
-							data: item
-						})
-						/* .done(function(res2){
-							console.log(res2);
-							if(res2 != 1) {
-								
-							} else {
-								
-							}
-						}).fail(function(xhr, status, e) {
-							alert('서버 에러');
-							console.log(xhr, status, e);
-						}); */
+							data: item,
+							async: false
+						}).done(function(res2){
+							result = dealRes(res2,item,'중복되는 제품코드가 있습니다. 데이터를 리로드합니다.',true);
+							
+						});
+						return result;
 				    },
 				    
 				    updateItem: function(item) {
+				    	var result = 0;
 				    	$.ajax({
 							type: 'POST',
 							url: '/update',
-							data: item
+							data: item,
+							async: false
+						}).done(function(res2){
+							result = dealRes(res2,item,'디비와 동기화 문제가 있습니다. 데이터를 리로드합니다.', true);
 						});
+						return result;
 				    },
 				    
 				    deleteItem: function(item) {
@@ -143,6 +160,8 @@
 							type: 'POST',
 							url: '/delete',
 							data: item
+						}).done(function(res2){
+							dealRes(res2,item,'이미 디비에 없는 제품입니다.');
 						});
 				    }
 				},
@@ -157,7 +176,6 @@
             		}
                 },
                 onItemInserted: function(args) {
-                	console.log(args.grid._sortField);
                 	if(args.grid._sortField) {
                     	var sortField = args.grid._sortField.name;
                     	var sortOrder = args.grid._sortField._grid._sortOrder;
@@ -179,7 +197,6 @@
 					}
                 },
                 onItemUpdated: function(args) {
-                	console.log(args.grid._sortField);
                 	if(args.grid._sortField) {
                     	var sortField = args.grid._sortField.name;
                     	var sortOrder = args.grid._sortField._grid._sortOrder;
@@ -210,8 +227,11 @@
                 ]
             });
 			
-		}).fail(function(xhr, status, e) {
-			console.log(xhr, status, e);
+		});
+		
+		$(document).ajaxError(function(a,b,c,d) {
+			alert('서버 에러, 서버 및 브라우저 콘솔 로그를 확인하세요.');
+			console.log(a,b,c,d);
 		});
 	</script>
 

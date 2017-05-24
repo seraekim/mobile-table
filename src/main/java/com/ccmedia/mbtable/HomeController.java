@@ -31,15 +31,10 @@ public class HomeController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody int create(@RequestParam Map<String, Object> mapReq) {
 		//List<Map> result = null;
-		int affectedCnt = 0;
+		int affectedCnt = -1;
 		try {
 			logger.debug(""+mapReq);
 			affectedCnt = service.create(mapReq);
-			if(affectedCnt==1) {
-				logger.debug("insert success");
-			} else {
-				logger.debug("insert fail");
-			}
 			//result = doRead();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,17 +61,10 @@ public class HomeController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody int update(@RequestParam Map<String, Object> mapReq) {
 		//List<Map> result = null;
-		int affectedCnt = 0;
+		int affectedCnt = -1;
 		try {
 			logger.debug(""+mapReq);
 			affectedCnt = service.update(mapReq);
-			if(affectedCnt==1) {
-				logger.debug("update success");
-			} else if(affectedCnt==0){
-				logger.debug("update 0 row");
-			} else {
-				logger.debug("update fail");
-			}
 			//result = doRead();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,17 +75,10 @@ public class HomeController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody int delete(@RequestParam Map<String, Object> mapReq) {
 		//List<Map> result = null;
-		int affectedCnt = 0;
+		int affectedCnt = -1;
 		try {
 			logger.debug(""+mapReq);
 			affectedCnt = service.delete(mapReq);
-			if(affectedCnt==1) {
-				logger.debug("delete success");
-			} else if(affectedCnt==0){
-				logger.debug("delete 0 row");
-			} else {
-				logger.debug("delete fail");
-			}
 			//result = doRead();
 		} catch (Exception e) {
 			e.printStackTrace();

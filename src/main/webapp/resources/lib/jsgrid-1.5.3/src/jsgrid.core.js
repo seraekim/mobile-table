@@ -1121,12 +1121,14 @@
             });
 
             return this._controllerCall("insertItem", insertingItem, args.cancel, function(insertedItem) {
-                insertedItem = insertedItem || insertingItem;
-                this._loadStrategy.finishInsert(insertedItem);
+            	if(insertedItem != 0) {
+                    insertedItem = insertedItem || insertingItem;
+                    this._loadStrategy.finishInsert(insertedItem);
 
-                this._callEventHandler(this.onItemInserted, {
-                    item: insertedItem
-                });
+                    this._callEventHandler(this.onItemInserted, {
+                        item: insertedItem
+                    });
+            	}
             });
         },
 
