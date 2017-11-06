@@ -15,13 +15,21 @@
 			</Pattern>
 		</encoder>
 	</appender>
+	
 	<logger name="com.ccmedia.mbtable.mapper" level="debug" additivity="false">
 		<appender-ref ref="SIMPLE" />
 	</logger>
 	<logger name="com.ccmedia.mbtable" level="debug" additivity="false">
 		<appender-ref ref="CLICKABLE" />
 	</logger>
-
+	
+	<logger name="jdbc.sqlonly" level="off"/>
+	<logger name="jdbc.sqltiming" level="off" />
+	<logger name="jdbc.audit" level="off" />
+	<logger name="jdbc.resultset" level="off" />
+	<logger name="jdbc.resultsettable" level="off" />
+	<logger name="jdbc.connection" level="off" />
+	
 	<root level="warn">
 		<appender-ref ref="SIMPLE" />
 	</root>
